@@ -1,5 +1,7 @@
 // app/api/check-nano-balance.ts
 
+import { NextResponse } from "next/server"
+
 
 export async function POST(request: Request) {
 
@@ -9,7 +11,12 @@ export async function POST(request: Request) {
   console.log({taskID, password})
 
 
-  return new Response("OK", {status: 200})
+  return NextResponse.json({
+    success: true,
+    data: {
+      what: "bamalam"
+    }
+  })
 
 
   // let session: GetSessionResponse
