@@ -1,6 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 import { checkAuth } from "@/lib/checkAuth"
+import { checkAddress } from "nanocurrency";
 
 const checkParams = (body: {
   hook_url: string,
@@ -27,6 +28,18 @@ const checkParams = (body: {
   }
   if (!task_id) {
     return { error: 'Task id is required' };
+  }
+
+  if (!checkAddress(monitored_nano_address)) {
+    return { error: 'Monitored Nano Address is invalid' };
+  }
+
+  if (known_nano_addresses.length > 0) {
+    for (let i = 0; i < known_nano_addresses.length; i++) {
+      if (!checkAddress(known_nano_addresses[i])) {
+        return { error: 'Known Nano Address is invalid' };
+      }
+    }
   }
 
   return null
