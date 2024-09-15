@@ -16,6 +16,8 @@ export async function POST(request: Request) {
     data: {
       what: "bamalam"
     }
+  }, {
+    status: 200
   })
 
 
