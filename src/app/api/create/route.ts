@@ -6,14 +6,14 @@ const checkParams = (body: {
   hook_url: string,
   monitored_nano_address: string,
   known_nano_addresses: string[],
-  taskID: string
+  task_id: string
 }) => {
 
   const {
     hook_url,
     monitored_nano_address,
     known_nano_addresses,
-    taskID
+    task_id
   } = body
 
   if (!hook_url) {
@@ -25,7 +25,7 @@ const checkParams = (body: {
   if (!known_nano_addresses) {
     return { error: 'Known Nano Addresses is required' };
   }
-  if (!taskID) {
+  if (!task_id) {
     return { error: 'Task id is required' };
   }
 
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     hook_url,
     monitored_nano_address,
     known_nano_addresses,
-    taskID,
+    task_id,
     password
   } = body
 
@@ -52,13 +52,13 @@ export async function POST(request: Request) {
     hook_url,
     monitored_nano_address,
     known_nano_addresses,
-    taskID,
+    task_id,
     password
   })
 
   try {
     
-    await checkAuth(taskID, password)
+    await checkAuth(task_id, password)
 
     // Update postgress with new data
      await sql`
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
       SET hook_url = ${hook_url},
       monitored_nano_address = ${monitored_nano_address},
       known_nano_addresses = ${known_nano_addresses}
-      WHERE task_id = ${taskID}
+      WHERE task_id = ${task_id}
     `;
 
     return NextResponse.json({
