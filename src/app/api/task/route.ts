@@ -2,16 +2,18 @@ import { NextResponse } from "next/server";
 import { checkAuth } from "@/lib/checkAuth"
 
 export async function GET(request: Request) {
-
-  const body = await request.json()
+    
+  const {searchParams} = new URL(request.url);
+  const task_id = searchParams.get("task_id");
+  const password = searchParams.get("password");
 
   try {
 
-    if (!body.task_id) {
+    if (!task_id) {
       throw new Error('Task id is required')
     }
     
-    const data = await checkAuth(body.task_id, body.password)
+    const data = await checkAuth(task_id, password)
 
     return NextResponse.json({
       success: true,
