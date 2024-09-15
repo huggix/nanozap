@@ -15,10 +15,7 @@ export async function GET(request: Request) {
     
     const data = await checkAuth(task_id, password)
 
-    return NextResponse.json({
-      success: true,
-      data: [data]
-    }, { status: 200 });
+    return NextResponse.json([data], { status: 200 });
 
   } catch (error) {
     const e = error as Error || { message: 'Unknown error' }
