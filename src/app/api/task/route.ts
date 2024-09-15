@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { checkAuth } from "@/lib/checkAuth"
 
-export async function DELETE(request: Request) {
+export async function GET(request: Request) {
 
   const body = await request.json()
 
